@@ -27,10 +27,12 @@ class EmpOpsHandler{
         final int hours = 8;
         final int partTimeHours = 4;
         final int wagePerHour = 20;
-        if(presentHours <= partTimeHours){
-            return wagePerHour * partTimeHours;
-        }else{
-            return  wagePerHour * hours;
+        switch (presentHours){
+            case 1 :
+            case 2 :
+            case 3 :
+            case 4 : return wagePerHour * partTimeHours;
+            default: return  wagePerHour * hours;
         }
     }
 }
