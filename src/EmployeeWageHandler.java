@@ -76,7 +76,18 @@ class EmpOpsHandler{
 public class EmployeeWageHandler {
     public static void main(String[] args) {
         Employee emp = new Employee("Bhavesh", 1);
-        int[] empData = EmpOpsHandler.monthlyWageCalculator();
-        System.out.println("Employee "+emp.name+" was present for a total of "+empData[1]+" fulldays and "+empData[0]+" halfdays based on that his total salary for month is "+empData[2]+" Rs.");
+        System.out.println("Enter no of full days and half days you have been present till date");
+        Scanner sc = new Scanner(System.in);
+        int fullDays = sc.nextInt();
+        int halfDays = sc.nextInt();
+        float totalDaysPresent = fullDays + ((float) halfDays /2);
+        int totalHoursPresent = fullDays * 8 + halfDays * 4;
+        if(totalDaysPresent < 20 && totalHoursPresent < 100){
+            System.out.println("Salary isn't generated yet");
+        } else if (totalDaysPresent < 20 && totalHoursPresent >= 100) {
+            System.out.println("Salary for "+totalHoursPresent+" hours is Rs. "+totalHoursPresent*20);
+        }else{
+            System.out.println("Salary for more than  20 days defaults to Rs. "+20*8*20);
+        }
     }
 }
