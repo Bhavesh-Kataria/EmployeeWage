@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 class Employee{
     String name;
@@ -22,18 +23,32 @@ class EmpOpsHandler{
         int isPresent = (int)Math.round(Math.random());
         return isPresent == 1 ;
     }
-    static int wageCalculator(){
+    static int wageCalculator(int presentHours){
         final int hours = 8;
+        final int partTimeHours = 4;
         final int wagePerHour = 20;
-        return  hours * wagePerHour;
+        if(presentHours <= partTimeHours){
+            return wagePerHour * partTimeHours;
+        }else{
+            return  wagePerHour * hours;
+        }
     }
 }
 
 
 public class EmployeeWageHandler {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int wage = 0;
         boolean setAttendance = EmpOpsHandler.empAttendance();
-        int wage = EmpOpsHandler.wageCalculator();
+        if(setAttendance){
+            System.out.println("Enter your log in time");
+            int logInTime = sc.nextInt();
+            System.out.println("Enter your log out time");
+            int logOutTime = sc.nextInt();
+            int presentHours = logOutTime - logInTime;
+            wage = EmpOpsHandler.wageCalculator(presentHours);
+        }
         Employee emp = new Employee("Bhavesh", 1, setAttendance,wage);
         if (emp.isPresentToday) {
             System.out.println("Employee "+emp.name+" is present today");
