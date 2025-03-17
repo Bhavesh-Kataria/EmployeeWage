@@ -24,14 +24,21 @@ class Company{
 
 }
 
-class EmpWageBuilder{
+interface EmpWageBuild{
+    public  void computeCompanySalary(EmpWageBuilder[] arr);
+}
+
+
+class EmpWageBuilder implements EmpWageBuild{
     Employee e;
     Company c;
     EmpWageBuilder(Employee e , Company c){
         this.e = e;
         this.c = c;
     }
-    public static void computeCompanySalary(EmpWageBuilder[] arr){
+
+    @Override
+    public void computeCompanySalary(EmpWageBuilder[] arr) {
         int[] companyExpense = new int[3];
         for(EmpWageBuilder ec : arr){
             switch (ec.c.name) {
@@ -127,6 +134,6 @@ public class EmployeeWageHandler {
         empcmps[2] = e3c3;
         empcmps[3] = e4c2;
         empcmps[4] = e5c2;
-        EmpWageBuilder.computeCompanySalary(empcmps);
+        e1c1.computeCompanySalary(empcmps);
     }
 }
