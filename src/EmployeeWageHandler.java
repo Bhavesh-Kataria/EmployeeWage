@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 class Employee{
@@ -25,7 +27,7 @@ class Company{
 }
 
 interface EmpWageBuild{
-    public  void computeCompanySalary(EmpWageBuilder[] arr);
+    public  void computeCompanySalary(ArrayList<EmpWageBuilder> empcmps);
 }
 
 
@@ -38,13 +40,16 @@ class EmpWageBuilder implements EmpWageBuild{
     }
 
     @Override
-    public void computeCompanySalary(EmpWageBuilder[] arr) {
+    public void computeCompanySalary(ArrayList<EmpWageBuilder> empcmps) {
         int[] companyExpense = new int[3];
-        for(EmpWageBuilder ec : arr){
-            switch (ec.c.name) {
-                case "QK" -> companyExpense[0] += ec.c.monthlyWage;
-                case "Wipro" -> companyExpense[1] += ec.c.monthlyWage;
-                case "Reliance" -> companyExpense[2] += ec.c.monthlyWage;
+        ListIterator<EmpWageBuilder> i = empcmps.listIterator();
+        EmpWageBuilder emp = null;
+        while(i.hasNext()){
+            emp = i.next();
+            switch (emp.c.name) {
+                case "QK" -> companyExpense[0] += emp.c.monthlyWage;
+                case "Wipro" -> companyExpense[1] += emp.c.monthlyWage;
+                case "Reliance" -> companyExpense[2] += emp.c.monthlyWage;
             }
         }
         System.out.println("QK's monthly expense is Rs."+companyExpense[0]);
@@ -115,9 +120,9 @@ class EmpOpsHandler{
 
 public class EmployeeWageHandler {
     public static void main(String[] args) {
-        Company c1= new Company("QK",14,100,3000);
-        Company c2= new Company("Wipro",12,98,4500);
-        Company c3= new Company("Reliance",18,150,1000);
+        Company c1= new Company("QK",14,100,7000);
+        Company c2= new Company("Wipro",12,98,4100);
+        Company c3= new Company("Reliance",18,150,2000);
         Employee emp1 = new Employee("Bhavesh", 1);
         Employee emp2 = new Employee("Sahil", 2);
         Employee emp3 = new Employee("Rushikesh", 3);
@@ -128,12 +133,12 @@ public class EmployeeWageHandler {
         EmpWageBuilder e3c3 =  new EmpWageBuilder(emp3,c3);
         EmpWageBuilder e4c2 =  new EmpWageBuilder(emp4,c2);
         EmpWageBuilder e5c2 =  new EmpWageBuilder(emp5,c2);
-        EmpWageBuilder[] empcmps = new EmpWageBuilder[5];
-        empcmps[0] = e1c1;
-        empcmps[1] = e2c1;
-        empcmps[2] = e3c3;
-        empcmps[3] = e4c2;
-        empcmps[4] = e5c2;
+        ArrayList<EmpWageBuilder> empcmps = new ArrayList<>();
+        empcmps.add(e1c1);
+        empcmps.add(e2c1);
+        empcmps.add(e3c3);
+        empcmps.add(e4c2);
+        empcmps.add(e5c2);
         e1c1.computeCompanySalary(empcmps);
     }
 }
