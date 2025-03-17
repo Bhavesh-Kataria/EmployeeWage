@@ -1,13 +1,11 @@
 import java.util.Scanner;
 
 class Employee{
-    Company c;
     String name;
     int id;
-    Employee(String name,int id,Company c){
+    Employee(String name,int id){
         this.name = name;
         this.id = id;
-        this.c = c;
     }
 }
 
@@ -25,6 +23,29 @@ class Company{
     }
 
 }
+
+class EmpWageBuilder{
+    Employee e;
+    Company c;
+    EmpWageBuilder(Employee e , Company c){
+        this.e = e;
+        this.c = c;
+    }
+    public static void computeCompanySalary(EmpWageBuilder[] arr){
+        int[] companyExpense = new int[3];
+        for(EmpWageBuilder ec : arr){
+            switch (ec.c.name) {
+                case "QK" -> companyExpense[0] += ec.c.monthlyWage;
+                case "Wipro" -> companyExpense[1] += ec.c.monthlyWage;
+                case "Reliance" -> companyExpense[2] += ec.c.monthlyWage;
+            }
+        }
+        System.out.println("QK's monthly expense is Rs."+companyExpense[0]);
+        System.out.println("Wipro's monthly expense is Rs."+companyExpense[1]);
+        System.out.println("Reliance's monthly expense is Rs."+companyExpense[2]);
+    }
+}
+
 
 class EmpOpsHandler{
     static final int hours = 8;
@@ -82,40 +103,30 @@ class EmpOpsHandler{
         empData[2] = monthlyWage;
         return  empData;
     }
-    static void calculateCompanyExpense(Employee[] emps){
-         int[] companyExpense = new int[3];
-         for (Employee e : emps){
-             if(e!=null){
-                 switch (e.c.name) {
-                     case "QK" -> companyExpense[0] += e.c.monthlyWage;
-                     case "Wipro" -> companyExpense[1] += e.c.monthlyWage;
-                     case "Reliance" -> companyExpense[2] += e.c.monthlyWage;
-                 }
-             }
-         }
-        System.out.println("Monthly expense for Qk is Rs. "+companyExpense[0]);
-        System.out.println("Monthly expense for Wipro is Rs. "+companyExpense[1]);
-        System.out.println("Monthly expense for Reliance is Rs. "+companyExpense[2]);
-    }
 }
 
 
 public class EmployeeWageHandler {
     public static void main(String[] args) {
-        Company c1= new Company("QK",14,100,3200);
-        Company c2= new Company("Wipro",12,98,4000);
-        Company c3= new Company("Reliance",18,150,2000);
-        Employee emp1 = new Employee("Bhavesh", 1,c1);
-        Employee emp2 = new Employee("Sahil", 2,c1);
-        Employee emp3 = new Employee("Rushikesh", 3,c3);
-        Employee emp4 = new Employee("Rehan", 4,c2);
-        Employee emp5 = new Employee("Dhruv", 5,c2);
-        Employee[] emps  = new Employee[10];
-        emps[0] = emp1;
-        emps[1] = emp2;
-        emps[2] = emp3;
-        emps[3] = emp4;
-        emps[4] = emp5;
-        EmpOpsHandler.calculateCompanyExpense(emps);
+        Company c1= new Company("QK",14,100,3000);
+        Company c2= new Company("Wipro",12,98,4500);
+        Company c3= new Company("Reliance",18,150,1000);
+        Employee emp1 = new Employee("Bhavesh", 1);
+        Employee emp2 = new Employee("Sahil", 2);
+        Employee emp3 = new Employee("Rushikesh", 3);
+        Employee emp4 = new Employee("Rehan", 4);
+        Employee emp5 = new Employee("Dhruv", 5);
+        EmpWageBuilder e1c1 =  new EmpWageBuilder(emp1,c1);
+        EmpWageBuilder e2c1 =  new EmpWageBuilder(emp2,c1);
+        EmpWageBuilder e3c3 =  new EmpWageBuilder(emp3,c3);
+        EmpWageBuilder e4c2 =  new EmpWageBuilder(emp4,c2);
+        EmpWageBuilder e5c2 =  new EmpWageBuilder(emp5,c2);
+        EmpWageBuilder[] empcmps = new EmpWageBuilder[5];
+        empcmps[0] = e1c1;
+        empcmps[1] = e2c1;
+        empcmps[2] = e3c3;
+        empcmps[3] = e4c2;
+        empcmps[4] = e5c2;
+        EmpWageBuilder.computeCompanySalary(empcmps);
     }
 }
